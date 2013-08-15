@@ -34,7 +34,7 @@
     
     //Set up preview layer
     {
-        AVCaptureVideoPreviewLayer *previewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:cameraCaptureSession];
+        previewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:cameraCaptureSession];
         [previewLayer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
         
         CALayer *rootLayer = [[self view] layer];
@@ -45,6 +45,30 @@
     
     [cameraCaptureSession startRunning];
 }
+
+-(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    switch (toInterfaceOrientation)
+    {
+        case UIInterfaceOrientationLandscapeLeft:
+            [previewLayer.connection setVideoOrientation:AVCaptureVideoOrientationLandscapeLeft];
+            break;
+        case UIInterfaceOrientationLandscapeRight:
+            [previewLayer.connection setVideoOrientation:AVCaptureVideoOrientationLandscapeRight];
+            break;
+        case UIInterfaceOrientationPortrait:
+            [previewLayer.connection setVideoOrientation:AVCaptureVideoOrientationPortrait];
+            break;
+        case UIInterfaceOrientationPortraitUpsideDown:
+            [previewLayer.connection setVideoOrientation:AVCaptureVideoOrientationPortraitUpsideDown];
+            break;
+            
+        default:
+            break;
+    }
+}
+
+#pragma mark IBAction methods
 
 - (IBAction)switchCamera:(UIButton *)sender
 {
