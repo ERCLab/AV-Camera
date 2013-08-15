@@ -20,6 +20,8 @@
     //Add input
     {
         AVCaptureDevice *device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+        [self setUpFlashForCaptureDevice:device];
+
         AVCaptureDeviceInput *deviceInput = [AVCaptureDeviceInput deviceInputWithDevice:device error:nil];
         [cameraCaptureSession addInput:deviceInput];
     }
@@ -37,7 +39,7 @@
         
         CALayer *rootLayer = [[self view] layer];
         [rootLayer setMasksToBounds:YES];
-        [previewLayer setFrame:CGRectMake(-70, 0, rootLayer.bounds.size.height, rootLayer.bounds.size.height)];
+        [previewLayer setFrame:CGRectMake(0, 0, rootLayer.bounds.size.height, rootLayer.bounds.size.height)];
         [rootLayer insertSublayer:previewLayer atIndex:0];
     }
     
@@ -49,29 +51,34 @@
     //If the device has a back camera, then the user can change cameras
     if ([self deviceHasBackCamera])
     {
-        [cameraCaptureSession beginConfiguration];
-        
-        AVCaptureDevice *videoDevice = nil;
+        AVCaptureDevice *device = nil;
         AVCaptureDeviceInput *currentInput = [cameraCaptureSession.inputs objectAtIndex:0];
         
         //Set the new device we will be switching to
         {
             if (currentInput.device.position == AVCaptureDevicePositionBack)
             {
-                videoDevice = [self getDeviceForPosition:AVCaptureDevicePositionFront];
+                device = [self getDeviceForPosition:AVCaptureDevicePositionFront];
             }
             else
             {
-                videoDevice = [self getDeviceForPosition:AVCaptureDevicePositionBack];
+                device = [self getDeviceForPosition:AVCaptureDevicePositionBack];
             }
         }
         
-        AVCaptureDeviceInput *deviceInput = [AVCaptureDeviceInput deviceInputWithDevice:videoDevice error:nil];
+        [self setUpFlashForCaptureDevice:device];
         
-        [cameraCaptureSession removeInput:currentInput];
-        [cameraCaptureSession addInput:deviceInput];
+        AVCaptureDeviceInput *deviceInput = [AVCaptureDeviceInput deviceInputWithDevice:device error:nil];
         
-        [cameraCaptureSession commitConfiguration];
+        //Switch the inputs
+        {
+            [cameraCaptureSession beginConfiguration];
+            
+            [cameraCaptureSession removeInput:currentInput];
+            [cameraCaptureSession addInput:deviceInput];
+            
+            [cameraCaptureSession commitConfiguration];
+        }
     }
     //If the user only has a front camera, then tell the user sorry
     else
@@ -81,11 +88,40 @@
     }
 }
 
-- (IBAction)changeFlash:(id)sender
+- (IBAction)changeFlash:(UIButton *)sender
 {
-    [cameraCaptureSession beginConfiguration];
-    
-    [cameraCaptureSession commitConfiguration];
+    //First get the current capture device
+    AVCaptureDevice *currentCaptureDevice = [[cameraCaptureSession.inputs objectAtIndex:0] device];
+
+    //Next check if flash is available for the current capture device
+    if ([currentCaptureDevice isFlashAvailable])
+    {
+        [currentCaptureDevice lockForConfiguration:nil];
+        switch (currentCaptureDevice.flashMode)
+        {
+            case AVCaptureFlashModeAuto:
+                [currentCaptureDevice setFlashMode:AVCaptureFlashModeOff];
+                [sender setTitle:@"Off" forState:UIControlStateNormal];
+                break;
+            case AVCaptureFlashModeOff:
+                [currentCaptureDevice setFlashMode:AVCaptureFlashModeOn];
+                [sender setTitle:@"On" forState:UIControlStateNormal];
+                break;
+            case AVCaptureFlashModeOn:
+                [currentCaptureDevice setFlashMode:AVCaptureFlashModeAuto];
+                [sender setTitle:@"Auto" forState:UIControlStateNormal];
+                break;
+                
+            default:
+                break;
+        }
+        [currentCaptureDevice unlockForConfiguration];
+    }
+    else
+    {
+        UIAlertView *cameraAlertView = [[UIAlertView alloc]initWithTitle:@"Camera error" message:@"Sorry, the camera you are currently using does not have a flash" delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
+        [cameraAlertView show];
+    }
 }
 
 - (IBAction)takePhoto:(id)sender
@@ -154,6 +190,26 @@
     }
     
     return nil;
+}
+
+-(void)setUpFlashForCaptureDevice:(AVCaptureDevice *)captureDevice
+{
+    NSString *buttonTitleString = @"";
+    //If the device has flash then set it up for the device
+    if (captureDevice.hasFlash)
+    {
+        [captureDevice lockForConfiguration:nil];
+        [captureDevice setFlashMode:AVCaptureFlashModeAuto];
+        [captureDevice unlockForConfiguration];
+        buttonTitleString = @"Auto";
+    }
+    //If no flash, then set the buttons title to reflect it
+    else
+    {
+        buttonTitleString = @"None";
+    }
+    
+    [self.flashButton setTitle:buttonTitleString forState:UIControlStateNormal];
 }
 
 @end

@@ -13,6 +13,9 @@
 {
     AVCaptureSession *cameraCaptureSession;
 }
+
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnailImageView;
+@property (weak, nonatomic) IBOutlet UIButton *flashButton;
+@property (weak, nonatomic) IBOutlet UIButton *switchCameraButton;
 
 @end
