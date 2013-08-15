@@ -11,7 +11,7 @@
 
 @interface CameraViewController : UIViewController
 {
-    AVCaptureSession *session;
+    AVCaptureSession *cameraCaptureSession;
 }
 
 @end
