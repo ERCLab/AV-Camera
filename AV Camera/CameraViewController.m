@@ -96,7 +96,10 @@
     //Next check if flash is available for the current capture device
     if ([currentCaptureDevice isFlashAvailable])
     {
+        //Lock the current device until done configurating the flash mode
         [currentCaptureDevice lockForConfiguration:nil];
+    
+        //Check what the current flash mode is and change it to the next
         switch (currentCaptureDevice.flashMode)
         {
             case AVCaptureFlashModeAuto:
@@ -115,8 +118,11 @@
             default:
                 break;
         }
+        
+        //Configurating the device is done, so unlock
         [currentCaptureDevice unlockForConfiguration];
     }
+    //If flash is not available for the current device, then show an error alert view
     else
     {
         UIAlertView *cameraAlertView = [[UIAlertView alloc]initWithTitle:@"Camera error" message:@"Sorry, the camera you are currently using does not have a flash" delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
