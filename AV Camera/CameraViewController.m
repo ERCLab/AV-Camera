@@ -52,16 +52,18 @@
         [cameraCaptureSession beginConfiguration];
         
         AVCaptureDevice *videoDevice = nil;
-
         AVCaptureDeviceInput *currentInput = [cameraCaptureSession.inputs objectAtIndex:0];
         
-        if (currentInput.device.position == AVCaptureDevicePositionBack)
+        //Set the new device we will be switching to
         {
-            videoDevice = [self getDeviceForPosition:AVCaptureDevicePositionFront];
-        }
-        else
-        {
-            videoDevice = [self getDeviceForPosition:AVCaptureDevicePositionBack];
+            if (currentInput.device.position == AVCaptureDevicePositionBack)
+            {
+                videoDevice = [self getDeviceForPosition:AVCaptureDevicePositionFront];
+            }
+            else
+            {
+                videoDevice = [self getDeviceForPosition:AVCaptureDevicePositionBack];
+            }
         }
         
         AVCaptureDeviceInput *deviceInput = [AVCaptureDeviceInput deviceInputWithDevice:videoDevice error:nil];
@@ -86,6 +88,35 @@
     [cameraCaptureSession commitConfiguration];
 }
 
+- (IBAction)takePhoto:(id)sender
+{
+    //First get the output to see if we're taking a picture or a video
+    AVCaptureOutput *output = [cameraCaptureSession.outputs objectAtIndex:0];
+    
+    //If taking a picture
+    if ([output isKindOfClass:[AVCaptureStillImageOutput class]])
+    {
+        //Convert the output to a AVCaptureStillImageOutput
+        AVCaptureStillImageOutput *imageOutput = (AVCaptureStillImageOutput *)output;
+        //Take the picture
+        [imageOutput captureStillImageAsynchronouslyFromConnection:[imageOutput.connections objectAtIndex:0] completionHandler:^(CMSampleBufferRef imageDataSampleBuffer, NSError *error)
+        {
+            //If any error, show it
+            if (error)
+            {
+                UIAlertView *cameraAlertView = [[UIAlertView alloc]initWithTitle:@"Camera error" message:error.localizedDescription delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
+                [cameraAlertView show];
+            }
+            //If no error, set the thumbnail image as the image taken
+            else
+            {
+                NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
+                UIImage *image = [[UIImage alloc] initWithData:imageData];
+                [self.thumbnailImageView setImage:image];
+            }
+        }];
+    }
+}
 #pragma mark custom methods
 
 -(BOOL)deviceHasBackCamera

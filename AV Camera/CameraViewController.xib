@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CameraViewController">
             <connections>
+                <outlet property="thumbnailImageView" destination="cDG-UM-P0o" id="uxz-8p-jQ0"/>
                 <outlet property="view" destination="1" id="POF-SG-5i2"/>
             </connections>
         </placeholder>
@@ -26,7 +27,14 @@
                             <state key="normal" title="Click">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="takePhoto:" destination="-1" eventType="touchUpInside" id="neJ-Pc-Kaz"/>
+                            </connections>
                         </button>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="cDG-UM-P0o">
+                            <rect key="frame" x="8" y="10" width="42" height="42"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        </imageView>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                 </view>

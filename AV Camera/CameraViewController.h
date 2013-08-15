@@ -13,5 +13,6 @@
 {
     AVCaptureSession *cameraCaptureSession;
 }
+@property (weak, nonatomic) IBOutlet UIImageView *thumbnailImageView;
 
 @end
