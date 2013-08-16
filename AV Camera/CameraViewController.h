@@ -11,12 +11,15 @@
 
 @interface CameraViewController : UIViewController
 {
-    AVCaptureSession *cameraCaptureSession;
     AVCaptureVideoPreviewLayer *previewLayer;
 }
 
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnailImageView;
 @property (weak, nonatomic) IBOutlet UIButton *flashButton;
 @property (weak, nonatomic) IBOutlet UIButton *switchCameraButton;
+@property (weak, nonatomic) IBOutlet UIButton *folderButton;
+@property (weak, nonatomic) IBOutlet UIButton *takePictureButton;
+@property (weak, nonatomic) IBOutlet UIView *rotatingContainerView;
+@property (weak, nonatomic) IBOutlet UIView *bottomBarView;
 
 @end

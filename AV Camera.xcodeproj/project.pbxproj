@@ -22,7 +22,10 @@
 		BE36A82417BD167700FCC9F3 /* AV_CameraTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BE36A82317BD167700FCC9F3 /* AV_CameraTests.m */; };
 		BE36A82E17BD16C500FCC9F3 /* CameraViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE36A82D17BD16C500FCC9F3 /* CameraViewController.xib */; };
 		BE36A83917BD42D100FCC9F3 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE36A83817BD42D100FCC9F3 /* AVFoundation.framework */; };
-		BE9FDEA117BE5FFF007DC492 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE9FDEA017BE5FFF007DC492 /* QuartzCore.framework */; };
+		BE9FDEC117BE8EA5007DC492 /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = BE9FDEBC17BE8EA5007DC492 /* UIImage+Alpha.m */; };
+		BE9FDEC217BE8EA5007DC492 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = BE9FDEBE17BE8EA5007DC492 /* UIImage+Resize.m */; };
+		BE9FDEC317BE8EA5007DC492 /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = BE9FDEC017BE8EA5007DC492 /* UIImage+RoundedCorner.m */; };
+		BE9FDECD17BE90D8007DC492 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE9FDECC17BE90D8007DC492 /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,7 +59,13 @@
 		BE36A82317BD167700FCC9F3 /* AV_CameraTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AV_CameraTests.m; sourceTree = "<group>"; };
 		BE36A82D17BD16C500FCC9F3 /* CameraViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CameraViewController.xib; sourceTree = "<group>"; };
 		BE36A83817BD42D100FCC9F3 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		BE9FDEA017BE5FFF007DC492 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		BE9FDEBB17BE8EA5007DC492 /* UIImage+Alpha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Alpha.h"; sourceTree = "<group>"; };
+		BE9FDEBC17BE8EA5007DC492 /* UIImage+Alpha.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Alpha.m"; sourceTree = "<group>"; };
+		BE9FDEBD17BE8EA5007DC492 /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
+		BE9FDEBE17BE8EA5007DC492 /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
+		BE9FDEBF17BE8EA5007DC492 /* UIImage+RoundedCorner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+RoundedCorner.h"; sourceTree = "<group>"; };
+		BE9FDEC017BE8EA5007DC492 /* UIImage+RoundedCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RoundedCorner.m"; sourceTree = "<group>"; };
+		BE9FDECC17BE90D8007DC492 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,7 +73,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BE9FDEA117BE5FFF007DC492 /* QuartzCore.framework in Frameworks */,
+				BE9FDECD17BE90D8007DC492 /* QuartzCore.framework in Frameworks */,
 				BE36A83917BD42D100FCC9F3 /* AVFoundation.framework in Frameworks */,
 				BE36A7F817BD167700FCC9F3 /* CoreGraphics.framework in Frameworks */,
 				BE36A7FA17BD167700FCC9F3 /* UIKit.framework in Frameworks */,
@@ -107,7 +116,7 @@
 		BE36A7F417BD167700FCC9F3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				BE9FDEA017BE5FFF007DC492 /* QuartzCore.framework */,
+				BE9FDECC17BE90D8007DC492 /* QuartzCore.framework */,
 				BE36A83817BD42D100FCC9F3 /* AVFoundation.framework */,
 				BE36A7F517BD167700FCC9F3 /* Foundation.framework */,
 				BE36A7F717BD167700FCC9F3 /* CoreGraphics.framework */,
@@ -120,6 +129,7 @@
 		BE36A7FB17BD167700FCC9F3 /* AV Camera */ = {
 			isa = PBXGroup;
 			children = (
+				BE9FDEA217BE6D96007DC492 /* Categories */,
 				BE36A80417BD167700FCC9F3 /* AppDelegate.h */,
 				BE36A80517BD167700FCC9F3 /* AppDelegate.m */,
 				BE36A80D17BD167700FCC9F3 /* CameraViewController.h */,
@@ -158,6 +168,19 @@
 				BE36A82017BD167700FCC9F3 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		BE9FDEA217BE6D96007DC492 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				BE9FDEBB17BE8EA5007DC492 /* UIImage+Alpha.h */,
+				BE9FDEBC17BE8EA5007DC492 /* UIImage+Alpha.m */,
+				BE9FDEBD17BE8EA5007DC492 /* UIImage+Resize.h */,
+				BE9FDEBE17BE8EA5007DC492 /* UIImage+Resize.m */,
+				BE9FDEBF17BE8EA5007DC492 /* UIImage+RoundedCorner.h */,
+				BE9FDEC017BE8EA5007DC492 /* UIImage+RoundedCorner.m */,
+			);
+			name = Categories;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -260,9 +283,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE9FDEC117BE8EA5007DC492 /* UIImage+Alpha.m in Sources */,
 				BE36A80F17BD167700FCC9F3 /* CameraViewController.m in Sources */,
 				BE36A80617BD167700FCC9F3 /* AppDelegate.m in Sources */,
 				BE36A80217BD167700FCC9F3 /* main.m in Sources */,
+				BE9FDEC317BE8EA5007DC492 /* UIImage+RoundedCorner.m in Sources */,
+				BE9FDEC217BE8EA5007DC492 /* UIImage+Resize.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -380,6 +406,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/Will/Developer/AV\\ Camera",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AV Camera/AV Camera-Prefix.pch";
 				INFOPLIST_FILE = "AV Camera/AV Camera-Info.plist";
@@ -396,6 +426,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/Will/Developer/AV\\ Camera",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AV Camera/AV Camera-Prefix.pch";
 				INFOPLIST_FILE = "AV Camera/AV Camera-Info.plist";

@@ -7,6 +7,7 @@
 //
 
 #import "CameraViewController.h"
+#import "UIImage+Resize.h"
 #import <QuartzCore/QuartzCore.h>
 
 @implementation CameraViewController
@@ -15,7 +16,14 @@
 {
     [super viewDidLoad];
     
-    cameraCaptureSession = [[AVCaptureSession alloc]init];
+    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self selector:@selector(orientationChanged:)
+     name:UIDeviceOrientationDidChangeNotification
+     object:[UIDevice currentDevice]];
+
+    
+    AVCaptureSession *cameraCaptureSession = [[AVCaptureSession alloc]init];
     [cameraCaptureSession setSessionPreset:AVCaptureSessionPresetHigh];
 
     //Add input
@@ -44,34 +52,14 @@
         [previewLayer setFrame:self.view.frame];
         [rootLayer insertSublayer:previewLayer atIndex:0];
     }
-    
+    //Start running the camera
     [cameraCaptureSession startRunning];
 }
 
--(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+-(BOOL)shouldAutorotate
 {
-    switch (toInterfaceOrientation)
-    {
-        case UIInterfaceOrientationLandscapeLeft:
-            [previewLayer.connection setVideoOrientation:AVCaptureVideoOrientationLandscapeLeft];
-            break;
-        case UIInterfaceOrientationLandscapeRight:
-            [previewLayer.connection setVideoOrientation:AVCaptureVideoOrientationLandscapeRight];
-            break;
-        case UIInterfaceOrientationPortrait:
-            [previewLayer.connection setVideoOrientation:AVCaptureVideoOrientationPortrait];
-            break;
-        case UIInterfaceOrientationPortraitUpsideDown:
-            [previewLayer.connection setVideoOrientation:AVCaptureVideoOrientationPortraitUpsideDown];
-            break;
-            
-        default:
-            break;
-    }
-    
-    [previewLayer setFrame:CGRectMake(0, 0, previewLayer.frame.size.height, previewLayer.frame.size.width)];
+    return NO;
 }
-
 
 #pragma mark IBAction methods
 
@@ -81,7 +69,7 @@
     if ([self deviceHasBackCamera])
     {
         AVCaptureDevice *device = nil;
-        AVCaptureDeviceInput *currentInput = [cameraCaptureSession.inputs objectAtIndex:0];
+        AVCaptureDeviceInput *currentInput = [previewLayer.session.inputs objectAtIndex:0];
         
         //Set the new device we will be switching to
         {
@@ -101,12 +89,12 @@
         
         //Switch the inputs
         {
-            [cameraCaptureSession beginConfiguration];
+            [previewLayer.session beginConfiguration];
             
-            [cameraCaptureSession removeInput:currentInput];
-            [cameraCaptureSession addInput:deviceInput];
+            [previewLayer.session removeInput:currentInput];
+            [previewLayer.session addInput:deviceInput];
             
-            [cameraCaptureSession commitConfiguration];
+            [previewLayer.session commitConfiguration];
         }
     }
     //If the user only has a front camera, then tell the user sorry
@@ -120,7 +108,7 @@
 - (IBAction)changeFlash:(UIButton *)sender
 {
     //First get the current capture device
-    AVCaptureDevice *currentCaptureDevice = [[cameraCaptureSession.inputs objectAtIndex:0] device];
+    AVCaptureDevice *currentCaptureDevice = [[previewLayer.session.inputs objectAtIndex:0] device];
 
     //Next check if flash is available for the current capture device
     if ([currentCaptureDevice isFlashAvailable])
@@ -162,7 +150,7 @@
 - (IBAction)takePhoto:(id)sender
 {
     //First get the output to see if we're taking a picture or a video
-    AVCaptureOutput *output = [cameraCaptureSession.outputs objectAtIndex:0];
+    AVCaptureOutput *output = [previewLayer.session.outputs objectAtIndex:0];
     
     //If taking a picture
     if ([output isKindOfClass:[AVCaptureStillImageOutput class]])
@@ -183,12 +171,82 @@
             {
                 NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
                 UIImage *image = [[UIImage alloc] initWithData:imageData];
+                
+                UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
                 [self.thumbnailImageView setImage:image];
             }
         }];
     }
 }
 #pragma mark custom methods
+
+- (void) orientationChanged:(NSNotification *)note
+{
+    UIDevice * device;
+    
+    if (note) {
+        device= note.object;
+    }
+    else
+    {
+        device = [UIDevice currentDevice];
+    }
+    CGRect newFrame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-self.bottomBarView.frame.size.height);
+    
+    if (device.orientation != UIDeviceOrientationFaceDown && device.orientation != UIDeviceOrientationFaceUp)
+    {
+        CGAffineTransform rotatingTransform;
+        switch(device.orientation)
+        {
+            case UIDeviceOrientationPortrait:
+                rotatingTransform = CGAffineTransformMakeRotation(0);
+                break;
+                
+            case UIDeviceOrientationPortraitUpsideDown:
+                rotatingTransform = CGAffineTransformMakeRotation(0);
+                break;
+                
+            case UIDeviceOrientationLandscapeLeft:
+                rotatingTransform = CGAffineTransformMakeRotation(M_PI_2);
+                break;
+                
+            case UIDeviceOrientationLandscapeRight:
+                rotatingTransform = CGAffineTransformMakeRotation(-M_PI_2);
+                break;
+                
+            default:
+                break;
+        };
+        
+        [UIView animateWithDuration:.25 animations:^
+         {
+             self.rotatingContainerView.transform = rotatingTransform;
+             [self.rotatingContainerView setFrame:newFrame];
+             
+             if (device.orientation == UIDeviceOrientationPortraitUpsideDown)
+             {
+                 CGAffineTransform upsideDownTranform = CGAffineTransformMakeRotation(-M_PI_2*2);
+                 self.flashButton.transform = upsideDownTranform;
+                 self.switchCameraButton.transform = upsideDownTranform;
+                 self.folderButton.transform = upsideDownTranform;
+                 self.takePictureButton.transform = upsideDownTranform;
+                 self.thumbnailImageView.transform = upsideDownTranform;
+             }
+             else
+             {
+                 CGAffineTransform rightSideUpTranform = CGAffineTransformMakeRotation(0);
+                 self.flashButton.transform = rightSideUpTranform;
+                 self.switchCameraButton.transform = rightSideUpTranform;
+                 self.folderButton.transform = rightSideUpTranform;
+            
+                 self.takePictureButton.transform = rotatingTransform;
+                 self.thumbnailImageView.transform = rotatingTransform;
+             }
+             
+         }];
+    }
+}
+
 
 -(BOOL)deviceHasBackCamera
 {
