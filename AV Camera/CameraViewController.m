@@ -7,7 +7,6 @@
 //
 
 #import "CameraViewController.h"
-#import "UIImage+Resize.h"
 #import <QuartzCore/QuartzCore.h>
 
 @implementation CameraViewController
@@ -171,8 +170,6 @@
             {
                 NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
                 UIImage *image = [[UIImage alloc] initWithData:imageData];
-                
-                UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
                 [self.thumbnailImageView setImage:image];
             }
         }];
