@@ -22,6 +22,7 @@
 		BE36A82417BD167700FCC9F3 /* AV_CameraTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BE36A82317BD167700FCC9F3 /* AV_CameraTests.m */; };
 		BE36A82E17BD16C500FCC9F3 /* CameraViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE36A82D17BD16C500FCC9F3 /* CameraViewController.xib */; };
 		BE36A83917BD42D100FCC9F3 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE36A83817BD42D100FCC9F3 /* AVFoundation.framework */; };
+		BE9FDEA117BE5FFF007DC492 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE9FDEA017BE5FFF007DC492 /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		BE36A82317BD167700FCC9F3 /* AV_CameraTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AV_CameraTests.m; sourceTree = "<group>"; };
 		BE36A82D17BD16C500FCC9F3 /* CameraViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CameraViewController.xib; sourceTree = "<group>"; };
 		BE36A83817BD42D100FCC9F3 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		BE9FDEA017BE5FFF007DC492 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +64,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE9FDEA117BE5FFF007DC492 /* QuartzCore.framework in Frameworks */,
 				BE36A83917BD42D100FCC9F3 /* AVFoundation.framework in Frameworks */,
 				BE36A7F817BD167700FCC9F3 /* CoreGraphics.framework in Frameworks */,
 				BE36A7FA17BD167700FCC9F3 /* UIKit.framework in Frameworks */,
@@ -104,6 +107,7 @@
 		BE36A7F417BD167700FCC9F3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BE9FDEA017BE5FFF007DC492 /* QuartzCore.framework */,
 				BE36A83817BD42D100FCC9F3 /* AVFoundation.framework */,
 				BE36A7F517BD167700FCC9F3 /* Foundation.framework */,
 				BE36A7F717BD167700FCC9F3 /* CoreGraphics.framework */,
@@ -461,6 +465,7 @@
 				BE36A82917BD167700FCC9F3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		BE36A82A17BD167700FCC9F3 /* Build configuration list for PBXNativeTarget "AV CameraTests" */ = {
 			isa = XCConfigurationList;
@@ -469,6 +474,7 @@
 				BE36A82C17BD167700FCC9F3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

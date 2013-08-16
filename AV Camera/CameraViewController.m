@@ -7,6 +7,7 @@
 //
 
 #import "CameraViewController.h"
+#import <QuartzCore/QuartzCore.h>
 
 @implementation CameraViewController
 
@@ -36,10 +37,11 @@
     {
         previewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:cameraCaptureSession];
         [previewLayer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
+
         
         CALayer *rootLayer = [[self view] layer];
         [rootLayer setMasksToBounds:YES];
-        [previewLayer setFrame:CGRectMake(0, 0, rootLayer.bounds.size.height, rootLayer.bounds.size.height)];
+        [previewLayer setFrame:self.view.frame];
         [rootLayer insertSublayer:previewLayer atIndex:0];
     }
     
@@ -66,7 +68,10 @@
         default:
             break;
     }
+    
+    [previewLayer setFrame:CGRectMake(0, 0, previewLayer.frame.size.height, previewLayer.frame.size.width)];
 }
+
 
 #pragma mark IBAction methods
 

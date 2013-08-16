@@ -33,7 +33,7 @@
                                 <action selector="takePhoto:" destination="-1" eventType="touchUpInside" id="neJ-Pc-Kaz"/>
                             </connections>
                         </button>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="cDG-UM-P0o">
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="cDG-UM-P0o">
                             <rect key="frame" x="8" y="10" width="42" height="42"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         </imageView>
