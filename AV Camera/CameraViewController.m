@@ -8,6 +8,7 @@
 
 #import "CameraViewController.h"
 #import <QuartzCore/QuartzCore.h>
+#import <MediaPlayer/MediaPlayer.h>
 
 @implementation CameraViewController
 
@@ -15,44 +16,78 @@
 {
     [super viewDidLoad];
     
-    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
-    [[NSNotificationCenter defaultCenter]
-     addObserver:self selector:@selector(orientationChanged:)
-     name:UIDeviceOrientationDidChangeNotification
-     object:[UIDevice currentDevice]];
-
-    
-    AVCaptureSession *cameraCaptureSession = [[AVCaptureSession alloc]init];
-    [cameraCaptureSession setSessionPreset:AVCaptureSessionPresetHigh];
-
-    //Add input
+    //Start listening for rotating of device to rotate the UI
     {
-        AVCaptureDevice *device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
-        [self setUpFlashForCaptureDevice:device];
-
-        AVCaptureDeviceInput *deviceInput = [AVCaptureDeviceInput deviceInputWithDevice:device error:nil];
-        [cameraCaptureSession addInput:deviceInput];
+        [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orientationChanged:) name:UIDeviceOrientationDidChangeNotification object:[UIDevice currentDevice]];
     }
     
-    //Add output
+    //Set up capture session and connect inputs and outputs
     {
-        AVCaptureStillImageOutput *imageCaptureOutput = [[AVCaptureStillImageOutput alloc] init];
-        [cameraCaptureSession addOutput:imageCaptureOutput];
-    }
-    
-    //Set up preview layer
-    {
-        previewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:cameraCaptureSession];
-        [previewLayer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
-
+        AVCaptureSession *cameraCaptureSession = [[AVCaptureSession alloc]init];
+        [cameraCaptureSession setSessionPreset:AVCaptureSessionPresetHigh];
         
-        CALayer *rootLayer = [[self view] layer];
-        [rootLayer setMasksToBounds:YES];
-        [previewLayer setFrame:self.view.frame];
-        [rootLayer insertSublayer:previewLayer atIndex:0];
+        //Add input
+        {
+            AVCaptureDevice *device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+            [self setUpFlashForCaptureDevice:device];
+            
+            AVCaptureDeviceInput *deviceInput = [AVCaptureDeviceInput deviceInputWithDevice:device error:nil];
+            [cameraCaptureSession addInput:deviceInput];
+        }
+        
+        //Add output
+        {
+            AVCaptureStillImageOutput *imageCaptureOutput = [[AVCaptureStillImageOutput alloc] init];
+            [cameraCaptureSession addOutput:imageCaptureOutput];
+        }
+        
+        //Set up preview layer
+        {
+            previewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:cameraCaptureSession];
+            [previewLayer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
+            
+            
+            CALayer *rootLayer = [[self view] layer];
+            [rootLayer setMasksToBounds:YES];
+            [previewLayer setFrame:self.view.frame];
+            [rootLayer insertSublayer:previewLayer atIndex:0];
+        }
+        
+        //Start running the camera
+        [cameraCaptureSession startRunning];
     }
-    //Start running the camera
-    [cameraCaptureSession startRunning];
+    
+    //Preparing the device to take pictures with pressing the volume up button
+    {
+        //Get the initial volume so that when we change the volume with the button we can set it back to the volume it was at before
+        initialVolume = [[MPMusicPlayerController applicationMusicPlayer] volume];
+        
+        //Create the volumeView, but push it off screen
+        MPVolumeView *volumeView = [[MPVolumeView alloc] initWithFrame:CGRectMake(-100, 0, 10, 0)];
+        [volumeView sizeToFit];
+        [self.view addSubview:volumeView];
+        
+        //Start the audio session and being listening
+        AudioSessionInitialize(NULL, NULL, NULL, NULL);
+        AudioSessionSetActive(YES);
+        [self initializeVolumeButtonDetection];
+    }
+}
+
+void volumeListenerCallback (
+                             void                      *inClientData,
+                             AudioSessionPropertyID    inID,
+                             UInt32                    inDataSize,
+                             const void                *inData
+                             )
+{
+    [((__bridge CameraViewController *)inClientData) takePhotoWithVolumeButton];
+}
+
+-(void)initializeVolumeButtonDetection
+{
+    AudioSessionAddPropertyListener(kAudioSessionProperty_CurrentHardwareOutputVolume, volumeListenerCallback, (__bridge void *)(self));
 }
 
 -(BOOL)shouldAutorotate
@@ -175,23 +210,40 @@
         }];
     }
 }
+
+-(void)takePhotoWithVolumeButton
+{
+    //Stop listening to volume changes until the picture has been taken
+    AudioSessionRemovePropertyListenerWithUserData(kAudioSessionProperty_CurrentHardwareOutputVolume, volumeListenerCallback, (__bridge void *)(self));
+    
+    //Set the volume back to the initial volume
+    [[MPMusicPlayerController applicationMusicPlayer] setVolume:initialVolume];
+    
+    [self takePhoto:nil];
+    
+    //Start listening again to volume changes
+    [self initializeVolumeButtonDetection];
+}
+
 #pragma mark custom methods
 
 - (void) orientationChanged:(NSNotification *)note
 {
     UIDevice * device;
     
-    if (note) {
+    if (note)
+    {
         device= note.object;
     }
     else
     {
         device = [UIDevice currentDevice];
     }
-    CGRect newFrame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-self.bottomBarView.frame.size.height);
     
     if (device.orientation != UIDeviceOrientationFaceDown && device.orientation != UIDeviceOrientationFaceUp)
     {
+        CGRect newFrame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-self.bottomBarView.frame.size.height);
+
         CGAffineTransform rotatingTransform;
         switch(device.orientation)
         {

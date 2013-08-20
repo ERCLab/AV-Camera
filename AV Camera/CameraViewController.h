@@ -12,6 +12,7 @@
 @interface CameraViewController : UIViewController
 {
     AVCaptureVideoPreviewLayer *previewLayer;
+    int initialVolume;
 }
 
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnailImageView;
