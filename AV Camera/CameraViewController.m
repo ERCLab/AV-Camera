@@ -9,6 +9,8 @@
 #import "CameraViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import <MediaPlayer/MediaPlayer.h>
+#import "UIImage+FixOrientation.h"
+#import <AssetsLibrary/AssetsLibrary.h>
 
 @implementation CameraViewController
 
@@ -38,7 +40,9 @@
         
         //Add output
         {
-            AVCaptureStillImageOutput *imageCaptureOutput = [[AVCaptureStillImageOutput alloc] init];
+            imageCaptureOutput = [[AVCaptureStillImageOutput alloc] init];
+            movieFileOutput = [[AVCaptureMovieFileOutput alloc]init];
+            //By default we start taking pictures rather than video
             [cameraCaptureSession addOutput:imageCaptureOutput];
         }
         
@@ -187,12 +191,10 @@ void volumeListenerCallback (
     AVCaptureOutput *output = [previewLayer.session.outputs objectAtIndex:0];
     
     //If taking a picture
-    if ([output isKindOfClass:[AVCaptureStillImageOutput class]])
+    if (output == imageCaptureOutput)
     {
-        //Convert the output to a AVCaptureStillImageOutput
-        AVCaptureStillImageOutput *imageOutput = (AVCaptureStillImageOutput *)output;
         //Take the picture
-        [imageOutput captureStillImageAsynchronouslyFromConnection:[imageOutput.connections objectAtIndex:0] completionHandler:^(CMSampleBufferRef imageDataSampleBuffer, NSError *error)
+        [imageCaptureOutput captureStillImageAsynchronouslyFromConnection:[imageCaptureOutput.connections objectAtIndex:0] completionHandler:^(CMSampleBufferRef imageDataSampleBuffer, NSError *error)
         {
             //If any error, show it
             if (error)
@@ -205,9 +207,47 @@ void volumeListenerCallback (
             {
                 NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
                 UIImage *image = [[UIImage alloc] initWithData:imageData];
-                [self.thumbnailImageView setImage:image];
+                
+                UIImage *rotatedImage = [image imageRotated];
+                
+                UIImageWriteToSavedPhotosAlbum(rotatedImage, nil, nil, nil);
+                [self.thumbnailImageView setImage:rotatedImage];
             }
         }];
+    }
+    else if(output == movieFileOutput)
+    {
+        if (movieFileOutput.recording)
+        {
+            [movieFileOutput stopRecording];
+        }
+        else
+        {
+            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+            NSString *documentsDirectory = [paths objectAtIndex:0];
+            
+            NSURL *temporaryMoveFilePath = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/temp.mov",documentsDirectory]];
+            
+            if ([[NSFileManager defaultManager] fileExistsAtPath:temporaryMoveFilePath.path])
+            {
+                [[NSFileManager defaultManager] removeItemAtURL:temporaryMoveFilePath error:nil];
+            }
+            
+            [movieFileOutput startRecordingToOutputFileURL:[NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/temp.mov",documentsDirectory]] recordingDelegate:self];
+        }
+    }
+}
+- (IBAction)switchCameraMode:(UISwitch *)sender
+{
+    //Turn on taking picture mode
+    if (sender.on)
+    {
+        [self switchToTakePictureMode];
+    }
+    //Turn on recording video mode
+    else
+    {
+        [self switchToTakeVideoMode];
     }
 }
 
@@ -223,6 +263,28 @@ void volumeListenerCallback (
     
     //Start listening again to volume changes
     [self initializeVolumeButtonDetection];
+}
+
+#pragma mark AVCaptureFileOutputRecordingDelegate methods
+
+- (void)captureOutput:(AVCaptureFileOutput *)captureOutput didStartRecordingToOutputFileAtURL:(NSURL *)fileURL fromConnections:(NSArray *)connections
+{
+    NSLog(@"Did start recording");
+    [self.takePictureButton setTitle:@"Stop" forState:UIControlStateNormal];
+}
+
+- (void)captureOutput:(AVCaptureFileOutput *)captureOutput didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL fromConnections:(NSArray *)connections error:(NSError *)error
+{
+    NSLog(@"Video did finish record and the saving of the video is complete");
+    
+    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+    
+    [library writeVideoAtPathToSavedPhotosAlbum:outputFileURL completionBlock:^(NSURL *assetURL, NSError *error)
+    {
+        [[NSFileManager defaultManager] removeItemAtURL:outputFileURL error:nil];
+        
+        [self.takePictureButton setTitle:@"Start" forState:UIControlStateNormal];
+    }];
 }
 
 #pragma mark custom methods
@@ -352,6 +414,22 @@ void volumeListenerCallback (
     }
     
     [self.flashButton setTitle:buttonTitleString forState:UIControlStateNormal];
+}
+
+-(void)switchToTakePictureMode
+{
+    AVCaptureSession *cameraCaptureSession = previewLayer.session;
+    [cameraCaptureSession removeOutput:movieFileOutput];
+    [cameraCaptureSession addOutput:imageCaptureOutput];
+    [self.takePictureButton setTitle:@"Click" forState:UIControlStateNormal];
+}
+
+-(void)switchToTakeVideoMode
+{
+    AVCaptureSession *cameraCaptureSession = previewLayer.session;
+    [cameraCaptureSession removeOutput:imageCaptureOutput];
+    [cameraCaptureSession addOutput:movieFileOutput];
+    [self.takePictureButton setTitle:@"Start" forState:UIControlStateNormal];
 }
 
 @end

@@ -9,10 +9,12 @@
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
 
-@interface CameraViewController : UIViewController
+@interface CameraViewController : UIViewController <AVCaptureFileOutputRecordingDelegate>
 {
     AVCaptureVideoPreviewLayer *previewLayer;
     int initialVolume;
+    AVCaptureStillImageOutput *imageCaptureOutput;
+    AVCaptureMovieFileOutput *movieFileOutput;
 }
 
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnailImageView;

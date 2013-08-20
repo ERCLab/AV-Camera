@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		BE2B533E17C397F700816C8C /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE2B533D17C397F700816C8C /* MediaPlayer.framework */; };
+		BE2B534117C3A95C00816C8C /* UIImage+FixOrientation.m in Sources */ = {isa = PBXBuildFile; fileRef = BE2B534017C3A95C00816C8C /* UIImage+FixOrientation.m */; };
 		BE36A7F617BD167700FCC9F3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE36A7F517BD167700FCC9F3 /* Foundation.framework */; };
 		BE36A7F817BD167700FCC9F3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE36A7F717BD167700FCC9F3 /* CoreGraphics.framework */; };
 		BE36A7FA17BD167700FCC9F3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE36A7F917BD167700FCC9F3 /* UIKit.framework */; };
@@ -24,6 +25,7 @@
 		BE36A82E17BD16C500FCC9F3 /* CameraViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE36A82D17BD16C500FCC9F3 /* CameraViewController.xib */; };
 		BE36A83917BD42D100FCC9F3 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE36A83817BD42D100FCC9F3 /* AVFoundation.framework */; };
 		BE9FDECD17BE90D8007DC492 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE9FDECC17BE90D8007DC492 /* QuartzCore.framework */; };
+		BEF8938F17C4049600B4B593 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEF8938E17C4049600B4B593 /* AssetsLibrary.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +40,8 @@
 
 /* Begin PBXFileReference section */
 		BE2B533D17C397F700816C8C /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		BE2B533F17C3A95C00816C8C /* UIImage+FixOrientation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+FixOrientation.h"; sourceTree = "<group>"; };
+		BE2B534017C3A95C00816C8C /* UIImage+FixOrientation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+FixOrientation.m"; sourceTree = "<group>"; };
 		BE36A7F217BD167700FCC9F3 /* AV Camera.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AV Camera.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE36A7F517BD167700FCC9F3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		BE36A7F717BD167700FCC9F3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -59,6 +63,7 @@
 		BE36A82D17BD16C500FCC9F3 /* CameraViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CameraViewController.xib; sourceTree = "<group>"; };
 		BE36A83817BD42D100FCC9F3 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		BE9FDECC17BE90D8007DC492 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		BEF8938E17C4049600B4B593 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +71,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BEF8938F17C4049600B4B593 /* AssetsLibrary.framework in Frameworks */,
 				BE2B533E17C397F700816C8C /* MediaPlayer.framework in Frameworks */,
 				BE9FDECD17BE90D8007DC492 /* QuartzCore.framework in Frameworks */,
 				BE36A83917BD42D100FCC9F3 /* AVFoundation.framework in Frameworks */,
@@ -110,6 +116,7 @@
 		BE36A7F417BD167700FCC9F3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BEF8938E17C4049600B4B593 /* AssetsLibrary.framework */,
 				BE2B533D17C397F700816C8C /* MediaPlayer.framework */,
 				BE9FDECC17BE90D8007DC492 /* QuartzCore.framework */,
 				BE36A83817BD42D100FCC9F3 /* AVFoundation.framework */,
@@ -129,8 +136,10 @@
 				BE36A80D17BD167700FCC9F3 /* CameraViewController.h */,
 				BE36A80E17BD167700FCC9F3 /* CameraViewController.m */,
 				BE36A82D17BD16C500FCC9F3 /* CameraViewController.xib */,
-				BE36A7FC17BD167700FCC9F3 /* Supporting Files */,
+				BE2B533F17C3A95C00816C8C /* UIImage+FixOrientation.h */,
+				BE2B534017C3A95C00816C8C /* UIImage+FixOrientation.m */,
 				BE36A81017BD167700FCC9F3 /* Images.xcassets */,
+				BE36A7FC17BD167700FCC9F3 /* Supporting Files */,
 			);
 			path = "AV Camera";
 			sourceTree = "<group>";
@@ -266,6 +275,7 @@
 			files = (
 				BE36A80F17BD167700FCC9F3 /* CameraViewController.m in Sources */,
 				BE36A80617BD167700FCC9F3 /* AppDelegate.m in Sources */,
+				BE2B534117C3A95C00816C8C /* UIImage+FixOrientation.m in Sources */,
 				BE36A80217BD167700FCC9F3 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
