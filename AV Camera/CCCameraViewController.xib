@@ -5,7 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3715.3"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CameraViewController">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CCCameraViewController">
             <connections>
                 <outlet property="bottomBarView" destination="DYl-bw-JrH" id="d7p-2B-3ei"/>
                 <outlet property="flashButton" destination="NIM-GX-MVl" id="hmw-NF-gbT"/>
@@ -56,9 +56,6 @@
                             <state key="normal" title="Folder">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
-                            <connections>
-                                <action selector="changeFlash:" destination="-1" eventType="touchUpInside" id="QXa-Iz-IZ5"/>
-                            </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="HiU-MK-5Uh">
                             <rect key="frame" x="20" y="58" width="55" height="31"/>

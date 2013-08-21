@@ -6,13 +6,13 @@
 //  Copyright (c) 2013 ERCLab. All rights reserved.
 //
 
-#import "CameraViewController.h"
+#import "CCCameraViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import <MediaPlayer/MediaPlayer.h>
 #import "UIImage+FixOrientation.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 
-@implementation CameraViewController
+@implementation CCCameraViewController
 
 - (void)viewDidLoad
 {
@@ -27,7 +27,7 @@
     //Set up capture session and connect inputs and outputs
     {
         AVCaptureSession *cameraCaptureSession = [[AVCaptureSession alloc]init];
-        [cameraCaptureSession setSessionPreset:AVCaptureSessionPresetHigh];
+        [cameraCaptureSession setSessionPreset:AVCaptureSessionPresetPhoto];
         
         //Add input
         {
@@ -49,8 +49,7 @@
         //Set up preview layer
         {
             previewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:cameraCaptureSession];
-            [previewLayer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
-            
+            [previewLayer setVideoGravity:AVLayerVideoGravityResizeAspect];
             
             CALayer *rootLayer = [[self view] layer];
             [rootLayer setMasksToBounds:YES];
@@ -86,7 +85,7 @@ void volumeListenerCallback (
                              const void                *inData
                              )
 {
-    [((__bridge CameraViewController *)inClientData) takePhotoWithVolumeButton];
+    [((__bridge CCCameraViewController *)inClientData) takePhotoWithVolumeButton];
 }
 
 -(void)initializeVolumeButtonDetection
@@ -453,6 +452,7 @@ void volumeListenerCallback (
     AVCaptureSession *cameraCaptureSession = previewLayer.session;
     [cameraCaptureSession removeOutput:movieFileOutput];
     [cameraCaptureSession addOutput:imageCaptureOutput];
+    [cameraCaptureSession setSessionPreset:AVCaptureSessionPresetPhoto];
     [self.takePictureButton setTitle:@"Click" forState:UIControlStateNormal];
 }
 
@@ -461,6 +461,7 @@ void volumeListenerCallback (
     AVCaptureSession *cameraCaptureSession = previewLayer.session;
     [cameraCaptureSession removeOutput:imageCaptureOutput];
     [cameraCaptureSession addOutput:movieFileOutput];
+    [cameraCaptureSession setSessionPreset:AVCaptureSessionPresetHigh];
     [self.takePictureButton setTitle:@"Start" forState:UIControlStateNormal];
 }
 

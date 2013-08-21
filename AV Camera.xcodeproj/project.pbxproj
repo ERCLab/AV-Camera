@@ -15,14 +15,14 @@
 		BE36A80017BD167700FCC9F3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BE36A7FE17BD167700FCC9F3 /* InfoPlist.strings */; };
 		BE36A80217BD167700FCC9F3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BE36A80117BD167700FCC9F3 /* main.m */; };
 		BE36A80617BD167700FCC9F3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BE36A80517BD167700FCC9F3 /* AppDelegate.m */; };
-		BE36A80F17BD167700FCC9F3 /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE36A80E17BD167700FCC9F3 /* CameraViewController.m */; };
+		BE36A80F17BD167700FCC9F3 /* CCCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE36A80E17BD167700FCC9F3 /* CCCameraViewController.m */; };
 		BE36A81117BD167700FCC9F3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BE36A81017BD167700FCC9F3 /* Images.xcassets */; };
 		BE36A81817BD167700FCC9F3 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE36A81717BD167700FCC9F3 /* XCTest.framework */; };
 		BE36A81917BD167700FCC9F3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE36A7F517BD167700FCC9F3 /* Foundation.framework */; };
 		BE36A81A17BD167700FCC9F3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE36A7F917BD167700FCC9F3 /* UIKit.framework */; };
 		BE36A82217BD167700FCC9F3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BE36A82017BD167700FCC9F3 /* InfoPlist.strings */; };
 		BE36A82417BD167700FCC9F3 /* AV_CameraTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BE36A82317BD167700FCC9F3 /* AV_CameraTests.m */; };
-		BE36A82E17BD16C500FCC9F3 /* CameraViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE36A82D17BD16C500FCC9F3 /* CameraViewController.xib */; };
+		BE36A82E17BD16C500FCC9F3 /* CCCameraViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE36A82D17BD16C500FCC9F3 /* CCCameraViewController.xib */; };
 		BE36A83917BD42D100FCC9F3 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE36A83817BD42D100FCC9F3 /* AVFoundation.framework */; };
 		BE9FDECD17BE90D8007DC492 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE9FDECC17BE90D8007DC492 /* QuartzCore.framework */; };
 		BEF8938F17C4049600B4B593 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEF8938E17C4049600B4B593 /* AssetsLibrary.framework */; };
@@ -52,15 +52,15 @@
 		BE36A80317BD167700FCC9F3 /* AV Camera-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AV Camera-Prefix.pch"; sourceTree = "<group>"; };
 		BE36A80417BD167700FCC9F3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		BE36A80517BD167700FCC9F3 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		BE36A80D17BD167700FCC9F3 /* CameraViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraViewController.h; sourceTree = "<group>"; };
-		BE36A80E17BD167700FCC9F3 /* CameraViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CameraViewController.m; sourceTree = "<group>"; };
+		BE36A80D17BD167700FCC9F3 /* CCCameraViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCCameraViewController.h; sourceTree = "<group>"; };
+		BE36A80E17BD167700FCC9F3 /* CCCameraViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CCCameraViewController.m; sourceTree = "<group>"; };
 		BE36A81017BD167700FCC9F3 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		BE36A81617BD167700FCC9F3 /* AV CameraTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AV CameraTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE36A81717BD167700FCC9F3 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		BE36A81F17BD167700FCC9F3 /* AV CameraTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AV CameraTests-Info.plist"; sourceTree = "<group>"; };
 		BE36A82117BD167700FCC9F3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		BE36A82317BD167700FCC9F3 /* AV_CameraTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AV_CameraTests.m; sourceTree = "<group>"; };
-		BE36A82D17BD16C500FCC9F3 /* CameraViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CameraViewController.xib; sourceTree = "<group>"; };
+		BE36A82D17BD16C500FCC9F3 /* CCCameraViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CCCameraViewController.xib; sourceTree = "<group>"; };
 		BE36A83817BD42D100FCC9F3 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		BE9FDECC17BE90D8007DC492 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		BEF8938E17C4049600B4B593 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
@@ -133,9 +133,9 @@
 			children = (
 				BE36A80417BD167700FCC9F3 /* AppDelegate.h */,
 				BE36A80517BD167700FCC9F3 /* AppDelegate.m */,
-				BE36A80D17BD167700FCC9F3 /* CameraViewController.h */,
-				BE36A80E17BD167700FCC9F3 /* CameraViewController.m */,
-				BE36A82D17BD16C500FCC9F3 /* CameraViewController.xib */,
+				BE36A80D17BD167700FCC9F3 /* CCCameraViewController.h */,
+				BE36A80E17BD167700FCC9F3 /* CCCameraViewController.m */,
+				BE36A82D17BD16C500FCC9F3 /* CCCameraViewController.xib */,
 				BE2B533F17C3A95C00816C8C /* UIImage+FixOrientation.h */,
 				BE2B534017C3A95C00816C8C /* UIImage+FixOrientation.m */,
 				BE36A81017BD167700FCC9F3 /* Images.xcassets */,
@@ -252,7 +252,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BE36A82E17BD16C500FCC9F3 /* CameraViewController.xib in Resources */,
+				BE36A82E17BD16C500FCC9F3 /* CCCameraViewController.xib in Resources */,
 				BE36A81117BD167700FCC9F3 /* Images.xcassets in Resources */,
 				BE36A80017BD167700FCC9F3 /* InfoPlist.strings in Resources */,
 			);
@@ -273,7 +273,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BE36A80F17BD167700FCC9F3 /* CameraViewController.m in Sources */,
+				BE36A80F17BD167700FCC9F3 /* CCCameraViewController.m in Sources */,
 				BE36A80617BD167700FCC9F3 /* AppDelegate.m in Sources */,
 				BE2B534117C3A95C00816C8C /* UIImage+FixOrientation.m in Sources */,
 				BE36A80217BD167700FCC9F3 /* main.m in Sources */,

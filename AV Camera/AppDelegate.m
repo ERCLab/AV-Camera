@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "CameraViewController.h"
+#import "CCCameraViewController.h"
 
 @implementation AppDelegate
 
@@ -16,7 +16,7 @@
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    CameraViewController *cameraViewController = [[CameraViewController alloc]init];
+    CCCameraViewController *cameraViewController = [[CCCameraViewController alloc]init];
     
     self.window.rootViewController = cameraViewController;
     
