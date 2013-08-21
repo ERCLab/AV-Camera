@@ -251,6 +251,38 @@ void volumeListenerCallback (
     }
 }
 
+- (IBAction)changeTorch:(id)sender
+{
+    AVCaptureDevice *currentCaptureDevice = [[previewLayer.session.inputs objectAtIndex:0] device];
+    
+    if ([currentCaptureDevice isTorchAvailable])
+    {
+        [currentCaptureDevice lockForConfiguration:nil];
+        switch (currentCaptureDevice.torchMode)
+        {
+            case AVCaptureTorchModeOff:
+                [currentCaptureDevice setTorchMode:AVCaptureTorchModeOn];
+                break;
+            case AVCaptureTorchModeOn:
+                [currentCaptureDevice setTorchMode:AVCaptureTorchModeOff];
+                break;
+            //I'm not sure what this does, it never seems to come on even in the dark!
+            case AVCaptureTorchModeAuto:
+                [currentCaptureDevice setTorchMode:AVCaptureTorchModeOff];
+                break;
+                
+            default:
+                break;
+        }
+        [currentCaptureDevice unlockForConfiguration];
+    }
+    else
+    {
+        UIAlertView *torchNotAvailableAlertView = [[UIAlertView alloc]initWithTitle:@"Torch error" message:@"Sorry, torch is not available for this device." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+        [torchNotAvailableAlertView show];
+    }
+}
+
 -(void)takePhotoWithVolumeButton
 {
     //Stop listening to volume changes until the picture has been taken

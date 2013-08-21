@@ -22,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *switchCameraButton;
 @property (weak, nonatomic) IBOutlet UIButton *folderButton;
 @property (weak, nonatomic) IBOutlet UIButton *takePictureButton;
+@property (weak, nonatomic) IBOutlet UIButton *torchButton;
 @property (weak, nonatomic) IBOutlet UIView *rotatingContainerView;
 @property (weak, nonatomic) IBOutlet UIView *bottomBarView;
 
